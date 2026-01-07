@@ -1,0 +1,3 @@
+db_name:FoodCourtmern
+username:ritsdavande
+pass:Rits@0104 but it can be written by Rits%400104 (here '@'repalced by '%40')

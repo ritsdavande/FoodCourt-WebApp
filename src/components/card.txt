@@ -1,0 +1,95 @@
+import React, { useState, useEffect } from "react";
+import { useDispatchCart } from "../components/ContextReducer"; // Adjust path as needed
+
+export default function Card(props) {
+  const [qty, setQty] = useState(1);
+  const [size, setSize] = useState("");
+  const dispatch = useDispatchCart();
+  const options = props.options || {};
+  const priceOptions = Object.keys(options);
+
+  useEffect(() => {
+    if (priceOptions.length > 0) setSize(priceOptions[0]);
+  }, [priceOptions]);
+
+  const handleQty = (e) => setQty(Number(e.target.value));
+  const handleSize = (e) => setSize(e.target.value);
+
+  const displayedPrice = size ? Number(options[size]) : 0;
+
+  const handleAddToCart = () => {
+    const item = {
+      id: props.foodItemId,
+      name: props.foodName,
+      qty: qty,
+      size: size,
+      price: displayedPrice, // unit price
+      img: props.ImgSrc,
+    };
+    console.log("Adding to cart:", item); // Debug log, remove in prod
+    dispatch({ type: "ADD", item });
+  };
+
+  return (
+    <div
+      className="card shadow-lg m-3"
+      style={{
+        width: "18rem",
+        minHeight: "380px",
+        margin: "auto",
+        background: "#23272b",
+        color: "white",
+      }}
+    >
+      <img
+        src={props.ImgSrc}
+        className="card-img-top"
+        alt={props.foodName}
+        style={{
+          height: "150px",
+          objectFit: "cover",
+          borderTopLeftRadius: "0.375rem",
+          borderTopRightRadius: "0.375rem",
+        }}
+      />
+      <div className="card-body">
+        <h5 className="card-title fw-bold" style={{ color: "#fff" }}>
+          {props.foodName}
+        </h5>
+        <div className="d-flex align-items-center my-2">
+          <select
+            className="form-select form-select-sm w-auto bg-success text-white mx-1"
+            value={qty}
+            onChange={handleQty}
+          >
+            {Array.from(Array(6), (e, i) => (
+              <option key={i + 1} value={i + 1}>
+                {i + 1}
+              </option>
+            ))}
+          </select>
+          <select
+            className="form-select form-select-sm w-auto bg-success text-white mx-2"
+            value={size}
+            onChange={handleSize}
+          >
+            {priceOptions.map((option) => (
+              <option key={option} value={option}>
+                {option}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="my-2">
+          <span style={{ fontWeight: "bold" }}>₹{displayedPrice}</span>
+        </div>
+        <button
+          className="btn btn-success mt-2 w-100"
+          onClick={handleAddToCart}
+        >
+          Add to Cart
+        </button>
+      </div>
+    </div>
+  );
+}

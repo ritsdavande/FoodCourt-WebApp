@@ -1,0 +1,19 @@
+const mongoose = require("mongoose");
+
+const mongoURI =
+  "mongodb+srv://ritsdavande:Rits%400104@cluster0.joksybr.mongodb.net/FoodCourtmern?retryWrites=true&w=majority&appName=Cluster0";
+
+const mongoDB = async () => {
+  try {
+    await mongoose.connect(mongoURI);
+    console.log("connected");
+
+    const fetched_data = mongoose.connection.db.collection("food_items");
+    const data = await fetched_data.find({}).toArray();
+    console.log();
+  } catch (err) {
+    console.log("---", err);
+  }
+};
+
+module.exports = mongoDB;

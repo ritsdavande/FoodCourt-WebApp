@@ -1,0 +1,29 @@
+# Vercel Ignore File
+# Exclude backend and unnecessary files from Vercel deployment
+
+# Backend directory (deployed separately on Render)
+backend/
+api/
+
+# Environment files (use Vercel dashboard for env vars)
+.env
+.env.local
+.env.render
+
+# Development files
+node_modules/
+.git/
+.vscode/
+
+# Documentation
+DEPLOYMENT.md
+README.md
+project_info.txt
+
+# Data files
+*.json
+!package.json
+!package-lock.json
+
+# Render configuration
+render.yaml

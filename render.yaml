@@ -1,0 +1,27 @@
+services:
+  - type: web
+    name: foodcourt-frontend
+    env: node
+    buildCommand: npm install && npm run build
+    startCommand: npm run start:prod
+    envVars:
+      - key: NODE_VERSION
+        value: 22.16.0
+      - key: REACT_APP_API_URL
+        sync: false
+    
+  # Backend (Express API)
+  - type: web
+    name: foodcourt-backend
+    env: node
+    buildCommand: cd backend && npm install
+    startCommand: cd backend && node index.js
+    envVars:
+      - key: NODE_VERSION
+        value: 22.16.0
+      - key: MONGO_URI
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: PORT
+        value: 5000
